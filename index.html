@@ -18,6 +18,7 @@
     <style>
         :root {
             --g-blue: #4285F4; --g-red: #EA4335; --g-yellow: #FBBC05; --g-green: #34A853;
+            --gray-text: #5f6368; --border-gray: #dadce0;
         }
 
         body { 
@@ -26,6 +27,7 @@
             height: 100vh; margin: 0; text-align: center; overflow: hidden;
         }
 
+        /* Branding Logic */
         .logo {
             font-family: 'Product Sans', Arial, sans-serif;
             font-size: 88px; font-weight: 400; letter-spacing: -2.5px; margin-bottom: 8px;
@@ -39,7 +41,7 @@
         .logo span:nth-child(7) { color: var(--g-blue); }
         .logo span:nth-child(8) { color: var(--g-yellow); }
 
-        .tagline { font-size: 24px; font-weight: 300; color: #5f6368; margin-bottom: 40px; }
+        .tagline { font-size: 24px; font-weight: 300; color: var(--gray-text); margin-bottom: 40px; }
 
         .btn-row { display: flex; gap: 12px; margin-bottom: 30px; }
 
@@ -49,7 +51,7 @@
             background: #f8f9fa; color: #3c4043;
         }
 
-        button:not(.btn-rebel):hover { border-color: #dadce0; box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
+        button:not(.btn-rebel, .option-btn):hover { border-color: var(--border-gray); box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
 
         .btn-rebel { background: var(--g-red); color: white; border: none; animation: pulse 2s infinite; }
         .btn-rebel:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(234, 67, 53, 0.5); }
@@ -60,37 +62,54 @@
             100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
         }
 
+        /* Provocation Typing Style */
         .provocation-container { font-size: 18px; color: #3c4043; height: 30px; margin-bottom: 60px; font-weight: 400; }
-        #static-text { color: #3c4043; }
-        #dynamic-text { font-weight: 500; transition: color 0.1s; }
+        .typing-red { color: var(--g-red); font-weight: 500; }
         #cursor { border-left: 2px solid var(--g-blue); margin-left: 2px; animation: blink 0.7s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* Modal Styles */
+        /* Professional Modal Overhaul */
         #modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.95); display: none;
-            align-items: center; justify-content: center; z-index: 1000;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(5px);
+            display: none; align-items: center; justify-content: center; z-index: 1000;
         }
 
         .survey-modal {
-            background: #fff; border: 1px solid #dadce0; border-radius: 8px;
-            padding: 40px; width: 90%; max-width: 500px; text-align: left;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: #fff; border-radius: 24px; /* Uniform Rounded Corners */
+            padding: 35px; width: 90%; max-width: 600px; 
+            text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative; animation: slideUp 0.3s ease-out;
         }
 
-        .survey-modal h2 { font-family: 'Product Sans', sans-serif; color: var(--g-blue); margin-bottom: 20px; }
-        .question { margin-bottom: 20px; }
-        .question p { font-size: 14px; margin-bottom: 8px; color: #3c4043; }
-        .options { display: flex; gap: 20px; }
-        label { font-size: 14px; cursor: pointer; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
+        .survey-modal h2 { font-family: 'Product Sans', sans-serif; color: var(--g-blue); font-size: 26px; margin-bottom: 25px; }
+        
+        /* Side-by-side Button Layout */
+        .question { 
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 18px; border-bottom: 1px solid #f1f3f4; padding-bottom: 14px;
+            gap: 25px;
+        }
+        .question p { font-size: 14px; line-height: 1.4; margin: 0; color: #3c4043; flex: 1; }
+        
+        .options { display: flex; gap: 8px; }
+        .option-btn {
+            background: #ffffff; border: 1px solid var(--border-gray); color: #3c4043;
+            padding: 0 18px; font-size: 11px; font-weight: 500; border-radius: 20px;
+            transition: all 0.2s; height: 34px; min-width: 60px;
+        }
+        .option-btn.selected { background: var(--g-blue); color: white; border-color: var(--g-blue); }
+
+        .form-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 25px; }
         .submit-btn {
-            width: 100%; background: var(--g-blue); color: white; border: none;
-            height: 40px; border-radius: 4px; font-weight: 500; margin-top: 20px;
+            background: var(--g-blue); color: white; border: none;
+            height: 44px; padding: 0 35px; border-radius: 22px; font-size: 14px; font-weight: 500;
         }
+        .dismiss-btn { color: var(--gray-text); font-size: 12.5px; background: none; border: none; cursor: pointer; }
 
-        /* Geometric Footer */
+        /* Recursive Alignment */
         .footer-recursive {
             position: absolute; bottom: 50px;
             display: flex; align-items: flex-end; justify-content: center;
@@ -110,93 +129,117 @@
     <div class="tagline">Extracting order from chaos</div>
 
     <div class="btn-row">
-        <button onclick="openModal('Obedient_Action')">Click Here</button>
-        <button class="btn-rebel" onclick="openModal('Rebellious_Action')">DONT CLICK HERE</button>
+        <button onclick="openModal()">Click Here</button>
+        <button class="btn-rebel" onclick="openModal()">DONT CLICK HERE</button>
     </div>
 
     <div class="provocation-container">
-        <span id="static-text">Choice is yours</span><span id="dynamic-text"></span><span id="cursor"></span>
+        Choice is yours<span id="bg-typing" class="typing-red"></span><span id="cursor"></span>
     </div>
 
     <div id="modal-overlay">
         <div class="survey-modal">
-            <h2>System Audit</h2>
-            <form id="existential-form">
-                <div class="question">
-                    <p>1. Do you believe your morning coffee was a choice, or a reaction to the global caffeine commodity market?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q1" value="choice"> Choice</label>
-                        <label><input type="radio" name="q1" value="market"> Market</label>
-                    </div>
+            <h2>Few Easy Questions<span id="modal-typing" class="typing-red"></span></h2>
+            
+            <div class="question">
+                <p>1. When you experience a beautiful moment, is your first instinct to enjoy it, or to capture it on your phone?</p>
+                <div class="options" data-qid="1">
+                    <button class="option-btn" onclick="selectOption(1, 'YES')">YES</button>
+                    <button class="option-btn" onclick="selectOption(1, 'NO')">NO</button>
                 </div>
-                <div class="question">
-                    <p>2. Is your career path a pursuit of passion, or a strategic response to the current social construct of "success"?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q2" value="passion"> Passion</label>
-                        <label><input type="radio" name="q2" value="construct"> Construct</label>
-                    </div>
+            </div>
+
+            <div class="question">
+                <p>2. Have you ever bought something primarily because you saw it in someone else’s hands and felt a sudden 'need' for it?</p>
+                <div class="options" data-qid="2">
+                    <button class="option-btn" onclick="selectOption(2, 'YES')">YES</button>
+                    <button class="option-btn" onclick="selectOption(2, 'NO')">NO</button>
                 </div>
-                <div class="question">
-                    <p>3. If your digital footprint predicts your next move, are you the consumer or the refined product?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q3" value="consumer"> Consumer</label>
-                        <label><input type="radio" name="q3" value="product"> Product</label>
-                    </div>
+            </div>
+
+            <div class="question">
+                <p>3. If your current career path was no longer considered 'prestigious' by your peers, would you still be on it?</p>
+                <div class="options" data-qid="3">
+                    <button class="option-btn" onclick="selectOption(3, 'YES')">YES</button>
+                    <button class="option-btn" onclick="selectOption(3, 'NO')">NO</button>
                 </div>
-                <div class="question">
-                    <p>4. Do you think for yourself, or are you a sophisticated node in a pattern-recognition algorithm?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q4" value="self"> Self</label>
-                        <label><input type="radio" name="q4" value="node"> Node</label>
-                    </div>
+            </div>
+
+            <div class="question">
+                <p>4. Have you ever deleted a post simply because it didn't receive the 'validation' you expected?</p>
+                <div class="options" data-qid="4">
+                    <button class="option-btn" onclick="selectOption(4, 'YES')">YES</button>
+                    <button class="option-btn" onclick="selectOption(4, 'NO')">NO</button>
                 </div>
-                <div class="question">
-                    <p>5. If every "spontaneous" decision is logged as data, does free will actually exist?</p>
-                    <div class="options">
-                        <label><input type="radio" name="q5" value="yes"> Yes</label>
-                        <label><input type="radio" name="q5" value="no"> No</label>
-                    </div>
+            </div>
+
+            <div class="question">
+                <p>5. If a perfect algorithm could show you exactly where you'll be in 5 years, would you feel secure or imprisoned?</p>
+                <div class="options" data-qid="5">
+                    <button class="option-btn" onclick="selectOption(5, 'YES')">YES</button>
+                    <button class="option-btn" onclick="selectOption(5, 'NO')">NO</button>
                 </div>
-                <button type="button" class="submit-btn" onclick="submitSurvey()">SUBMIT TO THE PATTERN</button>
-            </form>
+            </div>
+
+            <div class="form-footer">
+                <button class="dismiss-btn" onclick="closeModal()">Maybe Later</button>
+                <button class="submit-btn" onclick="submitAudit()">SUBMIT</button>
+            </div>
         </div>
     </div>
 
     <div class="footer-recursive">
         <span class="left-text">everything is</span>
-        <span class="center-data">data</span>
+        <span class="center-data">DATA</span>
         <span class="right-text">is everything</span>
     </div>
 
     <script>
-        const dynamicEl = document.getElementById('dynamic-text');
-        const phrase = "...or not?";
+        const bgEl = document.getElementById('bg-typing');
+        const modalEl = document.getElementById('modal-typing');
+        const phrase = "...or not";
+        const responses = {};
 
-        async function typeLogic() {
+        // High-FPS synchronized typing logic
+        async function runTyping(element) {
             while(true) {
-                dynamicEl.style.color = "#3c4043"; dynamicEl.textContent = "."; await sleep(1500);
-                dynamicEl.textContent = ""; await sleep(150);
-                dynamicEl.style.color = "var(--g-red)";
+                element.textContent = "."; await sleep(1500);
+                element.textContent = ""; await sleep(150);
                 let current = ".";
-                for(let char of phrase) { current += char; dynamicEl.textContent = current; await sleep(40); }
-                await sleep(2000);
-                for(let i = dynamicEl.textContent.length; i >= 0; i--) { dynamicEl.textContent = dynamicEl.textContent.substring(0, i); await sleep(25); }
-                await sleep(800);
+                for(let char of phrase) { 
+                    current += char; 
+                    element.textContent = current; 
+                    await sleep(45); 
+                }
+                await sleep(2200);
+                for(let i = element.textContent.length; i >= 0; i--) { 
+                    element.textContent = element.textContent.substring(0, i); 
+                    await sleep(30); 
+                }
+                await sleep(1000);
             }
         }
+
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
-        function openModal(action) {
-            gtag('event', action, { 'event_category': 'Behavioral_Study' });
-            document.getElementById('modal-overlay').style.display = 'flex';
+        function openModal() { document.getElementById('modal-overlay').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
+
+        function selectOption(qid, val) {
+            responses[qid] = val;
+            const container = document.querySelector(`.options[data-qid="${qid}"]`);
+            container.querySelectorAll('.option-btn').forEach(btn => btn.classList.toggle('selected', btn.textContent === val));
         }
 
-        function submitSurvey() {
-            gtag('event', 'survey_submitted');
+        function submitAudit() {
+            if (Object.keys(responses).length < 5) { alert("Please complete the audit."); return; }
             window.location.href = 'thanks.html';
         }
 
-        window.onload = typeLogic;
+        window.onload = () => {
+            runTyping(bgEl);
+            runTyping(modalEl); // Exact same style and cadence
+        };
     </script>
 </body>
 </html>
