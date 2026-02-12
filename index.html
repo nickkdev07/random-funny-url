@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Deployment Lab</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLVMYV7MCB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Initializing with debug_mode so you can see events in real-time
+      gtag('config', 'G-TLVMYV7MCB', { 'debug_mode': true });
+    </script>
+
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #121212; 
+            color: #e0e0e0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        h1 { color: #bb86fc; letter-spacing: 2px; }
+        .container { text-align: center; border: 1px solid #333; padding: 40px; border-radius: 15px; background: #1e1e1e; }
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
+        button { 
+            padding: 12px 24px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            border: 2px solid #03dac6; 
+            background: transparent; 
+            color: #03dac6; 
+            border-radius: 5px; 
+            transition: 0.3s; 
+        }
+        button:hover { background: #03dac6; color: #121212; }
+        .ads-btn { border-color: #cf6679; color: #cf6679; }
+        .ads-btn:hover { background: #cf6679; color: #121212; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Manual Deployment Project</h1>
+        <p>This site is hosted on GitHub Pages with manual tracking.</p>
+
+        <div class="btn-group">
+            <button onclick="sendEvent('test_button_click')">Useful Button</button>
+
+            <button class="ads-btn" onclick="sendConversion()">High Value Action</button>
+        </div>
+    </div>
+
+    <script>
+        // Track a generic event in Google Analytics
+        function sendEvent(buttonName) {
+            gtag('event', buttonName, {
+                'event_category': 'engagement',
+                'event_label': 'Home Page'
+            });
+            alert('Analytics event sent!');
+        }
+
+        // Track a specific conversion for Google Ads
+        function sendConversion() {
+            // NOTE: Replace 'AW-CONVERSION_ID/LABEL' with your actual IDs from Google Ads
+            gtag('event', 'conversion', {
+                'send_to': 'AW-CONVERSION_ID/LABEL',
+                'event_callback': function() {
+                    console.log('Conversion recorded');
+                }
+            });
+            alert('Ads conversion triggered!');
+        }
+    </script>
+</body>
+</html>
