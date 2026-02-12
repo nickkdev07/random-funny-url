@@ -10,7 +10,9 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-TLVMYV7MCB', { 'debug_mode': true });
+
+      // Standard config - Live Mode
+      gtag('config', 'G-TLVMYV7MCB');
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
@@ -109,10 +111,10 @@
             background: var(--g-blue); color: white; border: none;
             height: 44px; padding: 0 35px; border-radius: 22px; font-size: 14px; font-weight: 500;
         }
-        .submit-btn:hover { background: var(--g-green); } /* Updated Hover */
+        .submit-btn:hover { background: var(--g-green); }
 
         .dismiss-btn { color: var(--gray-text); font-size: 12.5px; background: none; border: none; cursor: pointer; }
-        .dismiss-btn:hover { color: var(--g-red); } /* Updated Hover */
+        .dismiss-btn:hover { color: var(--g-red); }
 
         /* Recursive Footer Alignment */
         .footer-recursive {
@@ -134,8 +136,8 @@
     <div class="tagline">Extracting order from chaos</div>
 
     <div class="btn-row">
-        <button onclick="openModal()">Click Here</button>
-        <button class="btn-rebel" onclick="openModal()">DONT CLICK HERE</button>
+        <button onclick="openModal('conformist')">Click Here</button>
+        <button class="btn-rebel" onclick="openModal('rebel')">DONT CLICK HERE</button>
     </div>
 
     <div class="provocation-container">
@@ -203,7 +205,10 @@
         const bgEl = document.getElementById('bg-typing');
         const modalEl = document.getElementById('modal-typing');
         const phrase = "...or not";
-        const responses = {};
+        
+        let responses = {};
+        let loadTime = Date.now(); // Track when the page loaded
+        let entryType = null; // Store if they were 'rebel' or 'conformist'
 
         async function runTyping(element) {
             while(true) {
@@ -218,18 +223,66 @@
         }
 
         function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-        function openModal() { document.getElementById('modal-overlay').style.display = 'flex'; }
-        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
+        
+        // UPGRADED: Tracks how they entered (Conformist vs Rebel) + Hesitation Time
+        function openModal(type) { 
+            document.getElementById('modal-overlay').style.display = 'flex';
+            
+            entryType = type;
+            let hesitationSeconds = (Date.now() - loadTime) / 1000;
+
+            // TRACKING: The Entry Event
+            gtag('event', 'survey_start', {
+                'entry_method': type,            // 'conformist' vs 'rebel'
+                'hesitation_time': hesitationSeconds.toFixed(2) // Seconds waiting
+            });
+        }
+
+        // UPGRADED: Tracks abandonment
+        function closeModal() { 
+            document.getElementById('modal-overlay').style.display = 'none'; 
+            
+            // TRACKING: The Avoidance Event
+            gtag('event', 'survey_abandoned', {
+                'reason': 'maybe_later',
+                'questions_answered': Object.keys(responses).length
+            });
+        }
 
         function selectOption(qid, val) {
+            // Check for Indecision (Did they answer this before?)
+            if (responses[qid] && responses[qid] !== val) {
+                gtag('event', 'answer_changed', {
+                    'question_id': qid,
+                    'from': responses[qid],
+                    'to': val
+                });
+            }
+
+            // Standard Logic
             responses[qid] = val;
             const container = document.querySelector(`.options[data-qid="${qid}"]`);
             container.querySelectorAll('.option-btn').forEach(btn => btn.classList.toggle('selected', btn.textContent === val));
+
+            // TRACKING: The Choice Event
+            gtag('event', 'question_answered', {
+                'question_id': qid,
+                'response': val
+            });
         }
 
         function submitAudit() {
             if (Object.keys(responses).length < 5) { alert("Please complete all questions."); return; }
-            window.location.href = 'thanks.html';
+            
+            // TRACKING: The Final Profile
+            gtag('event', 'survey_submitted', {
+                'archetype': entryType, // Ties their final result back to their entry choice
+                'status': 'complete'
+            });
+
+            setTimeout(() => {
+                window.location.href = 'thanks.html';
+            }, 300);
         }
 
         window.onload = () => { runTyping(bgEl); runTyping(modalEl); };
