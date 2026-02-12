@@ -3,81 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual Deployment Lab</title>
+    <title>Nikhil's Manual Chaos Lab</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLVMYV7MCB"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
-      // Initializing with debug_mode so you can see events in real-time
       gtag('config', 'G-TLVMYV7MCB', { 'debug_mode': true });
     </script>
 
     <style>
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #121212; 
-            color: #e0e0e0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0; 
+            background: #000; color: #39FF14; font-family: 'Comic Sans MS', cursive; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            height: 100vh; overflow: hidden; transition: 0.5s;
         }
-        h1 { color: #bb86fc; letter-spacing: 2px; }
-        .container { text-align: center; border: 1px solid #333; padding: 40px; border-radius: 15px; background: #1e1e1e; }
-        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
-        button { 
-            padding: 12px 24px; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            border: 2px solid #03dac6; 
-            background: transparent; 
-            color: #03dac6; 
-            border-radius: 5px; 
-            transition: 0.3s; 
+        .container { border: 5px dashed #39FF14; padding: 50px; text-align: center; }
+        h1 { font-size: 3rem; text-shadow: 2px 2px #ff00ff; }
+        
+        /* The Runaway Button */
+        #runaway-btn { 
+            position: absolute; padding: 15px 25px; background: red; color: white; 
+            border: none; cursor: pointer; font-weight: bold; font-size: 1.2rem;
         }
-        button:hover { background: #03dac6; color: #121212; }
-        .ads-btn { border-color: #cf6679; color: #cf6679; }
-        .ads-btn:hover { background: #cf6679; color: #121212; }
+        
+        .btn-group { margin-top: 50px; display: flex; gap: 20px; }
+        .standard-btn { 
+            padding: 15px 30px; background: transparent; border: 2px solid #39FF14; 
+            color: #39FF14; cursor: pointer; font-size: 1.1rem;
+        }
+        .standard-btn:hover { background: #39FF14; color: black; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Manual Deployment Project</h1>
-        <p>This site is hosted on GitHub Pages with manual tracking.</p>
+        <h1>DO NOT PANIC</h1>
+        <p>This site was deployed manually by Nikhil. It is 100% organic and gluten-free.</p>
 
         <div class="btn-group">
-            <button onclick="sendEvent('test_button_click')">Useful Button</button>
-
-            <button class="ads-btn" onclick="sendConversion()">High Value Action</button>
+            <button class="standard-btn" onclick="triggerPrawns()">The Prawn Truth 🦐</button>
+            <button class="standard-btn" style="border-color: #ff00ff; color: #ff00ff;" onclick="triggerAds()">Burn Ad Credits 💸</button>
         </div>
     </div>
 
+    <button id="runaway-btn" onmouseover="moveButton()" onclick="cheatClick()">CLICK FOR $1,000,000</button>
+
     <script>
-        // Track a generic event in Google Analytics
-        function sendEvent(buttonName) {
-            gtag('event', buttonName, {
-                'event_category': 'engagement',
-                'event_label': 'Home Page'
-            });
-            alert('Analytics event sent!');
+        function moveButton() {
+            const btn = document.getElementById('runaway-btn');
+            const x = Math.random() * (window.innerWidth - btn.clientWidth);
+            const y = Math.random() * (window.innerHeight - btn.clientHeight);
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            // Track how many times people tried to catch it
+            gtag('event', 'missed_button_attempt', { 'event_category': 'frustration' });
         }
 
-        // Track a specific conversion for Google Ads
-        function sendConversion() {
-            // NOTE: Replace 'AW-CONVERSION_ID/LABEL' with your actual IDs from Google Ads
-            gtag('event', 'conversion', {
-                'send_to': 'AW-CONVERSION_ID/LABEL',
-                'event_callback': function() {
-                    console.log('Conversion recorded');
-                }
-            });
-            alert('Ads conversion triggered!');
+        function triggerPrawns() {
+            document.body.style.backgroundColor = "pink";
+            alert("ALERT: Prawn levels are reaching critical mass!");
+            gtag('event', 'prawn_alert_triggered', { 'event_label': 'The Pink Screen' });
+        }
+
+        function triggerAds() {
+            document.body.style.filter = "invert(100%)";
+            alert("CONVERSION: You just cost Nikhil 0.00001 cents.");
+            gtag('event', 'conversion', { 'send_to': 'AW-REPLACE_ME' });
+        }
+
+        function cheatClick() {
+            alert("HOW DID YOU CLICK THIS?! You are a wizard.");
+            gtag('event', 'impossible_click_achieved');
         }
     </script>
 </body>
