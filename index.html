@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikhil's Manual Chaos Lab</title>
+    <title>Nikhil's Digital Fever Dream</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLVMYV7MCB"></script>
     <script>
@@ -14,69 +14,102 @@
     </script>
 
     <style>
+        :root {
+            --bg: #f0f0f0;
+            --accent: #ff3e00;
+            --secondary: #00e5ff;
+            --black: #1a1a1a;
+        }
+
         body { 
-            background: #000; color: #39FF14; font-family: 'Comic Sans MS', cursive; 
+            background: var(--bg); 
+            color: var(--black); 
+            font-family: 'Space Grotesk', sans-serif; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; overflow: hidden; transition: 0.5s;
+            height: 100vh; margin: 0; overflow: hidden;
         }
-        .container { border: 5px dashed #39FF14; padding: 50px; text-align: center; }
-        h1 { font-size: 3rem; text-shadow: 2px 2px #ff00ff; }
-        
-        /* The Runaway Button */
-        #runaway-btn { 
-            position: absolute; padding: 15px 25px; background: red; color: white; 
-            border: none; cursor: pointer; font-weight: bold; font-size: 1.2rem;
+
+        .card {
+            background: white;
+            border: 4px solid var(--black);
+            box-shadow: 12px 12px 0px var(--black);
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
         }
-        
-        .btn-group { margin-top: 50px; display: flex; gap: 20px; }
-        .standard-btn { 
-            padding: 15px 30px; background: transparent; border: 2px solid #39FF14; 
-            color: #39FF14; cursor: pointer; font-size: 1.1rem;
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; }
+        p { font-style: italic; margin-bottom: 30px; }
+
+        .btn-group { display: flex; flex-direction: column; gap: 15px; }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            border: 3px solid var(--black);
+            transition: all 0.1s ease;
+            background: white;
         }
-        .standard-btn:hover { background: #39FF14; color: black; }
+
+        /* Aesthetics for different buttons */
+        .btn-logic { background: var(--secondary); box-shadow: 5px 5px 0px var(--black); }
+        .btn-logic:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0px var(--black); }
+        .btn-logic:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px var(--black); }
+
+        .btn-chaos { background: var(--accent); color: white; box-shadow: 5px 5px 0px var(--black); }
+        .btn-chaos:hover { transform: rotate(-2deg); }
+
+        #runner {
+            position: absolute;
+            background: yellow;
+            padding: 10px;
+            border: 2px solid black;
+            font-size: 0.8rem;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>DO NOT PANIC</h1>
-        <p>This site was deployed manually by Nikhil. It is 100% organic and gluten-free.</p>
+    <div class="card">
+        <h1>Nikhil's Manual Lab</h1>
+        <p>"I deployed this with my bare hands and 3 cups of coffee."</p>
 
         <div class="btn-group">
-            <button class="standard-btn" onclick="triggerPrawns()">The Prawn Truth 🦐</button>
-            <button class="standard-btn" style="border-color: #ff00ff; color: #ff00ff;" onclick="triggerAds()">Burn Ad Credits 💸</button>
+            <button class="btn-logic" onclick="triggerVibe('vibe_check_passed')">
+                Check My Vibe 📈
+            </button>
+
+            <button class="btn-chaos" onclick="triggerChaos('credit_card_roulette')">
+                Initiate Self-Destruct 💣
+            </button>
         </div>
     </div>
 
-    <button id="runaway-btn" onmouseover="moveButton()" onclick="cheatClick()">CLICK FOR $1,000,000</button>
+    <button id="runner" onmouseover="runAway()">CLICK TO STOP THE CHAOS</button>
 
     <script>
-        function moveButton() {
-            const btn = document.getElementById('runaway-btn');
-            const x = Math.random() * (window.innerWidth - btn.clientWidth);
-            const y = Math.random() * (window.innerHeight - btn.clientHeight);
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-            
-            // Track how many times people tried to catch it
-            gtag('event', 'missed_button_attempt', { 'event_category': 'frustration' });
+        function triggerVibe(name) {
+            document.body.style.background = 'linear-gradient(45deg, #00e5ff, #ff3e00)';
+            gtag('event', name, { 'event_category': 'Aesthetics' });
+            alert("Vibe check: IMMACULATE.");
         }
 
-        function triggerPrawns() {
-            document.body.style.backgroundColor = "pink";
-            alert("ALERT: Prawn levels are reaching critical mass!");
-            gtag('event', 'prawn_alert_triggered', { 'event_label': 'The Pink Screen' });
-        }
-
-        function triggerAds() {
+        function triggerChaos(name) {
+            const sounds = ["BEEP", "BOOP", "ERR_404_BRAIN_NOT_FOUND"];
+            alert(sounds[Math.floor(Math.random() * sounds.length)]);
             document.body.style.filter = "invert(100%)";
-            alert("CONVERSION: You just cost Nikhil 0.00001 cents.");
             gtag('event', 'conversion', { 'send_to': 'AW-REPLACE_ME' });
         }
 
-        function cheatClick() {
-            alert("HOW DID YOU CLICK THIS?! You are a wizard.");
-            gtag('event', 'impossible_click_achieved');
+        function runAway() {
+            const btn = document.getElementById('runner');
+            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            gtag('event', 'chase_begun', { 'event_label': 'Runner Button' });
         }
     </script>
 </body>
