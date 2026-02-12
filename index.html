@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Experiment #742</title>
+    <title>Syntropy - Behavioral Study</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLVMYV7MCB"></script>
     <script>
@@ -13,124 +13,80 @@
       gtag('config', 'G-TLVMYV7MCB', { 'debug_mode': true });
     </script>
 
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --goog-blue: #4285F4;
-            --goog-red: #EA4335;
-            --goog-yellow: #FBBC05;
-            --goog-green: #34A853;
-            --gray-100: #f8f9fa;
-            --gray-300: #dadce0;
+            --g-blue: #4285F4; --g-red: #EA4335; --g-yellow: #FBBC05; --g-green: #34A853;
         }
 
         body { 
-            background: #ffffff; 
-            color: #202124; 
-            font-family: 'Roboto', Arial, sans-serif; 
+            background: #ffffff; color: #202124; font-family: 'Roboto', sans-serif; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; margin: 0;
+            height: 100vh; margin: 0; text-align: center;
         }
 
-        .experiment-container {
-            text-align: center;
-            padding: 24px;
-            width: 100%;
-            max-width: 600px;
-        }
-
+        /* The Syntropy "Logo" */
         .logo {
-            font-size: 48px;
-            font-weight: 500;
-            margin-bottom: 30px;
-            letter-spacing: -1.5px;
+            font-family: 'Product Sans', Arial, sans-serif;
+            font-size: 80px; font-weight: 400; letter-spacing: -2px; margin-bottom: 5px;
         }
+        .logo span:nth-child(1) { color: var(--g-blue); }
+        .logo span:nth-child(2) { color: var(--g-red); }
+        .logo span:nth-child(3) { color: var(--g-yellow); }
+        .logo span:nth-child(4) { color: var(--g-blue); }
+        .logo span:nth-child(5) { color: var(--g-green); }
+        .logo span:nth-child(6) { color: var(--g-red); }
+        .logo span:nth-child(7) { color: var(--g-blue); }
+        .logo span:nth-child(8) { color: var(--g-yellow); }
 
-        /* Coloring the "Random Funny Website Name" like the Google Logo */
-        .logo span:nth-child(1) { color: var(--goog-blue); }
-        .logo span:nth-child(2) { color: var(--goog-red); }
-        .logo span:nth-child(3) { color: var(--goog-yellow); }
-        .logo span:nth-child(4) { color: var(--goog-blue); }
-        .logo span:nth-child(5) { color: var(--goog-green); }
-        .logo span:nth-child(6) { color: var(--goog-red); }
+        .tagline { font-size: 20px; font-weight: 300; color: #5f6368; margin-bottom: 5px; }
+        .sub-tagline { font-size: 16px; color: #70757a; margin-bottom: 30px; }
+        .micro-tag { font-size: 10px; color: #dadce0; text-transform: uppercase; margin-top: 50px; }
 
-        .search-box-mimic {
-            border: 1px solid var(--gray-300);
-            border-radius: 24px;
-            padding: 12px 20px;
-            margin-bottom: 24px;
-            box-shadow: none;
-            transition: box-shadow 0.2s;
-            color: #5f6368;
-        }
-        .search-box-mimic:hover {
-            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-            border-color: rgba(223,225,229,0);
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
+        .btn-row { display: flex; gap: 15px; }
 
         button {
-            background-color: var(--gray-100);
-            border: 1px solid var(--gray-100);
-            border-radius: 4px;
-            color: #3c4043;
-            font-family: 'Roboto', arial, sans-serif;
-            font-size: 14px;
-            margin: 11px 4px;
-            padding: 0 16px;
-            line-height: 27px;
-            height: 36px;
-            min-width: 54px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
+            height: 40px; padding: 0 20px; border-radius: 4px; border: 1px solid transparent;
+            font-size: 14px; cursor: pointer; transition: 0.2s; background: #f8f9fa; color: #3c4043;
         }
 
-        button:hover {
-            border: 1px solid var(--gray-300);
-            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-            color: #202124;
+        /* The Rebellious Button */
+        .btn-rebel {
+            background: var(--g-red); color: white; border: none; font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        .btn-rebel:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(234, 67, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
         }
 
-        /* Specific styles for the experiment buttons */
-        .btn-forbidden:hover { border-color: var(--goog-red); color: var(--goog-red); }
-        .btn-safe:hover { border-color: var(--goog-blue); color: var(--goog-blue); }
-
+        button:not(.btn-rebel):hover { border-color: #dadce0; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <div class="experiment-container">
-        <div class="logo">
-            <span>R</span><span>a</span><span>n</span><span>d</span><span>o</span><span>m</span>
-        </div>
-        
-        <div class="search-box-mimic">
-            Social Experiment #742: Choose a path...
-        </div>
+    <div class="logo">
+        <span>S</span><span>y</span><span>n</span><span>t</span><span>r</span><span>o</span><span>p</span><span>y</span>
+    </div>
+    
+    <div class="tagline">Extracting order from chaos</div>
+    <div class="sub-tagline">Everything is data</div>
 
-        <div class="btn-row">
-            <button class="btn-safe" onclick="logAction('Choice_Click_Here')">Click Here</button>
-            <button class="btn-forbidden" onclick="logAction('Choice_Dont_Click')">Dont Click Here</button>
-        </div>
+    <div class="btn-row">
+        <button onclick="record('Obedient_Click')">Click Here</button>
+        <button class="btn-rebel" onclick="record('Rebellious_Click')">DONT CLICK HERE</button>
     </div>
 
+    <div class="micro-tag">data is everything</div>
+
     <script>
-        function logAction(type) {
-            gtag('event', type, {
-                'event_category': 'behavioral_testing',
-                'event_label': 'Google_Aesthetic_V1'
-            });
-            
-            if (type.includes('Dont')) {
-                alert("Choice: Chaotic. This event has been sent to your Google Ads conversion stream.");
-            } else {
-                alert("Choice: Standard. This event has been logged in Google Analytics.");
-            }
+        function record(action) {
+            gtag('event', action, { 'event_category': 'Syntropy_Experiment_V1' });
+            alert(action === 'Rebellious_Click' ? "Order disrupted. Data extracted." : "Path followed. Data recorded.");
         }
     </script>
 </body>
