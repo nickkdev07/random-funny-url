@@ -13,7 +13,7 @@
       gtag('config', 'G-TLVMYV7MCB', { 'debug_mode': true });
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Product+Sans:wght@400&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -26,10 +26,10 @@
             height: 100vh; margin: 0; text-align: center;
         }
 
-        /* The Syntropy "Logo" */
+        /* The Syntropy Logo - Exact Google-style spacing */
         .logo {
             font-family: 'Product Sans', Arial, sans-serif;
-            font-size: 80px; font-weight: 400; letter-spacing: -2px; margin-bottom: 5px;
+            font-size: 88px; font-weight: 400; letter-spacing: -2.5px; margin-bottom: 8px;
         }
         .logo span:nth-child(1) { color: var(--g-blue); }
         .logo span:nth-child(2) { color: var(--g-red); }
@@ -40,23 +40,38 @@
         .logo span:nth-child(7) { color: var(--g-blue); }
         .logo span:nth-child(8) { color: var(--g-yellow); }
 
-        .tagline { font-size: 20px; font-weight: 300; color: #5f6368; margin-bottom: 5px; }
-        .sub-tagline { font-size: 16px; color: #70757a; margin-bottom: 30px; }
-        .micro-tag { font-size: 10px; color: #dadce0; text-transform: uppercase; margin-top: 50px; }
+        .tagline { font-size: 24px; font-weight: 300; color: #5f6368; margin-bottom: 4px; }
+        .sub-tagline { font-size: 18px; color: #70757a; font-weight: 400; margin-bottom: 25px; }
+        
+        /* The Question - Placed right above the choice */
+        .provocation { 
+            font-size: 15px; color: #3c4043; font-style: italic; 
+            margin-bottom: 20px; opacity: 0.8;
+        }
 
-        .btn-row { display: flex; gap: 15px; }
+        .btn-row { display: flex; gap: 12px; }
 
         button {
-            height: 40px; padding: 0 20px; border-radius: 4px; border: 1px solid transparent;
-            font-size: 14px; cursor: pointer; transition: 0.2s; background: #f8f9fa; color: #3c4043;
+            height: 44px; padding: 0 24px; border-radius: 4px; border: 1px solid transparent;
+            font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s; 
+            background: #f8f9fa; color: #3c4043;
         }
 
-        /* The Rebellious Button */
-        .btn-rebel {
-            background: var(--g-red); color: white; border: none; font-weight: bold;
-            animation: pulse 1.5s infinite;
+        button:not(.btn-rebel):hover { 
+            border-color: #dadce0; 
+            box-shadow: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15); 
         }
-        .btn-rebel:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4); }
+
+        /* The Rebellious Button - Irresistible red pulse */
+        .btn-rebel {
+            background: var(--g-red); color: white; border: none;
+            animation: pulse 2s infinite;
+        }
+        .btn-rebel:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(234, 67, 53, 0.5); 
+            filter: brightness(1.1);
+        }
 
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.7); }
@@ -64,7 +79,11 @@
             100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
         }
 
-        button:not(.btn-rebel):hover { border-color: #dadce0; box-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+        .micro-tag { 
+            position: absolute; bottom: 30px;
+            font-size: 11px; color: #e8eaed; text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
     </style>
 </head>
 <body>
@@ -76,17 +95,22 @@
     <div class="tagline">Extracting order from chaos</div>
     <div class="sub-tagline">Everything is data</div>
 
+    <div class="provocation">Choice is yours... or not?</div>
+
     <div class="btn-row">
-        <button onclick="record('Obedient_Click')">Click Here</button>
-        <button class="btn-rebel" onclick="record('Rebellious_Click')">DONT CLICK HERE</button>
+        <button onclick="record('Obedient_Path')">Click Here</button>
+        <button class="btn-rebel" onclick="record('Rebellious_Path')">DONT CLICK HERE</button>
     </div>
 
     <div class="micro-tag">data is everything</div>
 
     <script>
         function record(action) {
-            gtag('event', action, { 'event_category': 'Syntropy_Experiment_V1' });
-            alert(action === 'Rebellious_Click' ? "Order disrupted. Data extracted." : "Path followed. Data recorded.");
+            gtag('event', action, { 
+                'event_category': 'Behavioral_Flow',
+                'event_label': 'Syntropy_V2'
+            });
+            alert(action === 'Rebellious_Path' ? "Order disrupted. Choice verified." : "Path followed. Submission recorded.");
         }
     </script>
 </body>
