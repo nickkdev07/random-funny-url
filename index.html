@@ -23,10 +23,9 @@
         body { 
             background: #ffffff; color: #202124; font-family: 'Roboto', sans-serif; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; margin: 0; text-align: center;
+            height: 100vh; margin: 0; text-align: center; overflow: hidden;
         }
 
-        /* The Syntropy Logo */
         .logo {
             font-family: 'Product Sans', Arial, sans-serif;
             font-size: 88px; font-weight: 400; letter-spacing: -2.5px; margin-bottom: 8px;
@@ -41,9 +40,8 @@
         .logo span:nth-child(8) { color: var(--g-yellow); }
 
         .tagline { font-size: 24px; font-weight: 300; color: #5f6368; margin-bottom: 40px; }
-        .provocation { font-size: 15px; color: #3c4043; font-style: italic; margin-bottom: 20px; opacity: 0.8; }
 
-        .btn-row { display: flex; gap: 12px; margin-bottom: 100px; }
+        .btn-row { display: flex; gap: 12px; margin-bottom: 30px; }
 
         button {
             height: 44px; padding: 0 24px; border-radius: 4px; border: 1px solid transparent;
@@ -51,10 +49,7 @@
             background: #f8f9fa; color: #3c4043;
         }
 
-        button:not(.btn-rebel):hover { 
-            border-color: #dadce0; 
-            box-shadow: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15); 
-        }
+        button:not(.btn-rebel):hover { border-color: #dadce0; box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
 
         .btn-rebel { background: var(--g-red); color: white; border: none; animation: pulse 2s infinite; }
         .btn-rebel:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(234, 67, 53, 0.5); }
@@ -65,17 +60,45 @@
             100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
         }
 
-        /* The Recursive Footer Logic */
-        .footer-recursive {
-            position: absolute; bottom: 50px;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Roboto', sans-serif;
-            color: #bdc1c6; /* Visible but subtle gray */
+        .provocation-container { font-size: 18px; color: #3c4043; height: 30px; margin-bottom: 60px; font-weight: 400; }
+        #static-text { color: #3c4043; }
+        #dynamic-text { font-weight: 500; transition: color 0.1s; }
+        #cursor { border-left: 2px solid var(--g-blue); margin-left: 2px; animation: blink 0.7s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Modal Styles */
+        #modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95); display: none;
+            align-items: center; justify-content: center; z-index: 1000;
         }
 
-        .left-text { font-size: 20px; font-weight: 300; margin-right: 10px; }
-        .center-data { font-size: 32px; font-weight: 500; color: #70757a; text-transform: uppercase; letter-spacing: 2px; }
-        .right-text { font-size: 20px; font-weight: 300; margin-left: 10px; }
+        .survey-modal {
+            background: #fff; border: 1px solid #dadce0; border-radius: 8px;
+            padding: 40px; width: 90%; max-width: 500px; text-align: left;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .survey-modal h2 { font-family: 'Product Sans', sans-serif; color: var(--g-blue); margin-bottom: 20px; }
+        .question { margin-bottom: 20px; }
+        .question p { font-size: 14px; margin-bottom: 8px; color: #3c4043; }
+        .options { display: flex; gap: 20px; }
+        label { font-size: 14px; cursor: pointer; }
+
+        .submit-btn {
+            width: 100%; background: var(--g-blue); color: white; border: none;
+            height: 40px; border-radius: 4px; font-weight: 500; margin-top: 20px;
+        }
+
+        /* Geometric Footer */
+        .footer-recursive {
+            position: absolute; bottom: 50px;
+            display: flex; align-items: flex-end; justify-content: center;
+            height: 50px;
+        }
+        .left-text { font-size: 18px; font-weight: 300; color: #bdc1c6; margin-right: 15px; align-self: flex-start; line-height: 1; margin-top: 10px; }
+        .center-data { font-size: 44px; font-weight: 500; color: #70757a; text-transform: uppercase; letter-spacing: 4px; line-height: 1; }
+        .right-text { font-size: 18px; font-weight: 300; color: #bdc1c6; margin-left: 15px; align-self: flex-end; line-height: 1; margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -86,11 +109,57 @@
     
     <div class="tagline">Extracting order from chaos</div>
 
-    <div class="provocation">Choice is yours... or not?</div>
-
     <div class="btn-row">
-        <button onclick="record('Obedient_Path')">Click Here</button>
-        <button class="btn-rebel" onclick="record('Rebellious_Path')">DONT CLICK HERE</button>
+        <button onclick="openModal('Obedient_Action')">Click Here</button>
+        <button class="btn-rebel" onclick="openModal('Rebellious_Action')">DONT CLICK HERE</button>
+    </div>
+
+    <div class="provocation-container">
+        <span id="static-text">Choice is yours</span><span id="dynamic-text"></span><span id="cursor"></span>
+    </div>
+
+    <div id="modal-overlay">
+        <div class="survey-modal">
+            <h2>System Audit</h2>
+            <form id="existential-form">
+                <div class="question">
+                    <p>1. Do you believe your morning coffee was a choice, or a reaction to the global caffeine commodity market?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="choice"> Choice</label>
+                        <label><input type="radio" name="q1" value="market"> Market</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <p>2. Is your career path a pursuit of passion, or a strategic response to the current social construct of "success"?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="passion"> Passion</label>
+                        <label><input type="radio" name="q2" value="construct"> Construct</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <p>3. If your digital footprint predicts your next move, are you the consumer or the refined product?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="consumer"> Consumer</label>
+                        <label><input type="radio" name="q3" value="product"> Product</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <p>4. Do you think for yourself, or are you a sophisticated node in a pattern-recognition algorithm?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="self"> Self</label>
+                        <label><input type="radio" name="q4" value="node"> Node</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <p>5. If every "spontaneous" decision is logged as data, does free will actually exist?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="yes"> Yes</label>
+                        <label><input type="radio" name="q5" value="no"> No</label>
+                    </div>
+                </div>
+                <button type="button" class="submit-btn" onclick="submitSurvey()">SUBMIT TO THE PATTERN</button>
+            </form>
+        </div>
     </div>
 
     <div class="footer-recursive">
@@ -100,10 +169,34 @@
     </div>
 
     <script>
-        function record(action) {
-            gtag('event', action, { 'event_category': 'Behavioral_Flow' });
-            alert(action === 'Rebellious_Path' ? "Order disrupted." : "Path followed.");
+        const dynamicEl = document.getElementById('dynamic-text');
+        const phrase = "...or not?";
+
+        async function typeLogic() {
+            while(true) {
+                dynamicEl.style.color = "#3c4043"; dynamicEl.textContent = "."; await sleep(1500);
+                dynamicEl.textContent = ""; await sleep(150);
+                dynamicEl.style.color = "var(--g-red)";
+                let current = ".";
+                for(let char of phrase) { current += char; dynamicEl.textContent = current; await sleep(40); }
+                await sleep(2000);
+                for(let i = dynamicEl.textContent.length; i >= 0; i--) { dynamicEl.textContent = dynamicEl.textContent.substring(0, i); await sleep(25); }
+                await sleep(800);
+            }
         }
+        function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+        function openModal(action) {
+            gtag('event', action, { 'event_category': 'Behavioral_Study' });
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function submitSurvey() {
+            gtag('event', 'survey_submitted');
+            window.location.href = 'thanks.html';
+        }
+
+        window.onload = typeLogic;
     </script>
 </body>
 </html>
