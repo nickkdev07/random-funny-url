@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikhil's Digital Fever Dream</title>
+    <title>Social Experiment #742</title>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TLVMYV7MCB"></script>
     <script>
@@ -15,101 +15,122 @@
 
     <style>
         :root {
-            --bg: #f0f0f0;
-            --accent: #ff3e00;
-            --secondary: #00e5ff;
-            --black: #1a1a1a;
+            --goog-blue: #4285F4;
+            --goog-red: #EA4335;
+            --goog-yellow: #FBBC05;
+            --goog-green: #34A853;
+            --gray-100: #f8f9fa;
+            --gray-300: #dadce0;
         }
 
         body { 
-            background: var(--bg); 
-            color: var(--black); 
-            font-family: 'Space Grotesk', sans-serif; 
+            background: #ffffff; 
+            color: #202124; 
+            font-family: 'Roboto', Arial, sans-serif; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; margin: 0; overflow: hidden;
+            height: 100vh; margin: 0;
         }
 
-        .card {
-            background: white;
-            border: 4px solid var(--black);
-            box-shadow: 12px 12px 0px var(--black);
-            padding: 40px;
+        .experiment-container {
             text-align: center;
-            max-width: 500px;
+            padding: 24px;
+            width: 100%;
+            max-width: 600px;
         }
 
-        h1 { font-size: 2.5rem; margin-bottom: 10px; text-transform: uppercase; }
-        p { font-style: italic; margin-bottom: 30px; }
+        .logo {
+            font-size: 48px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            letter-spacing: -1.5px;
+        }
 
-        .btn-group { display: flex; flex-direction: column; gap: 15px; }
+        /* Coloring the "Random Funny Website Name" like the Google Logo */
+        .logo span:nth-child(1) { color: var(--goog-blue); }
+        .logo span:nth-child(2) { color: var(--goog-red); }
+        .logo span:nth-child(3) { color: var(--goog-yellow); }
+        .logo span:nth-child(4) { color: var(--goog-blue); }
+        .logo span:nth-child(5) { color: var(--goog-green); }
+        .logo span:nth-child(6) { color: var(--goog-red); }
+
+        .search-box-mimic {
+            border: 1px solid var(--gray-300);
+            border-radius: 24px;
+            padding: 12px 20px;
+            margin-bottom: 24px;
+            box-shadow: none;
+            transition: box-shadow 0.2s;
+            color: #5f6368;
+        }
+        .search-box-mimic:hover {
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            border-color: rgba(223,225,229,0);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
 
         button {
-            padding: 15px 25px;
-            font-size: 1.2rem;
-            font-weight: 800;
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-100);
+            border-radius: 4px;
+            color: #3c4043;
+            font-family: 'Roboto', arial, sans-serif;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 0 16px;
+            line-height: 27px;
+            height: 36px;
+            min-width: 54px;
+            text-align: center;
             cursor: pointer;
-            text-transform: uppercase;
-            border: 3px solid var(--black);
-            transition: all 0.1s ease;
-            background: white;
+            user-select: none;
         }
 
-        /* Aesthetics for different buttons */
-        .btn-logic { background: var(--secondary); box-shadow: 5px 5px 0px var(--black); }
-        .btn-logic:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0px var(--black); }
-        .btn-logic:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px var(--black); }
-
-        .btn-chaos { background: var(--accent); color: white; box-shadow: 5px 5px 0px var(--black); }
-        .btn-chaos:hover { transform: rotate(-2deg); }
-
-        #runner {
-            position: absolute;
-            background: yellow;
-            padding: 10px;
-            border: 2px solid black;
-            font-size: 0.8rem;
-            cursor: not-allowed;
+        button:hover {
+            border: 1px solid var(--gray-300);
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            color: #202124;
         }
+
+        /* Specific styles for the experiment buttons */
+        .btn-forbidden:hover { border-color: var(--goog-red); color: var(--goog-red); }
+        .btn-safe:hover { border-color: var(--goog-blue); color: var(--goog-blue); }
+
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Nikhil's Manual Lab</h1>
-        <p>"I deployed this with my bare hands and 3 cups of coffee."</p>
+    <div class="experiment-container">
+        <div class="logo">
+            <span>R</span><span>a</span><span>n</span><span>d</span><span>o</span><span>m</span>
+        </div>
+        
+        <div class="search-box-mimic">
+            Social Experiment #742: Choose a path...
+        </div>
 
-        <div class="btn-group">
-            <button class="btn-logic" onclick="triggerVibe('vibe_check_passed')">
-                Check My Vibe 📈
-            </button>
-
-            <button class="btn-chaos" onclick="triggerChaos('credit_card_roulette')">
-                Initiate Self-Destruct 💣
-            </button>
+        <div class="btn-row">
+            <button class="btn-safe" onclick="logAction('Choice_Click_Here')">Click Here</button>
+            <button class="btn-forbidden" onclick="logAction('Choice_Dont_Click')">Dont Click Here</button>
         </div>
     </div>
 
-    <button id="runner" onmouseover="runAway()">CLICK TO STOP THE CHAOS</button>
-
     <script>
-        function triggerVibe(name) {
-            document.body.style.background = 'linear-gradient(45deg, #00e5ff, #ff3e00)';
-            gtag('event', name, { 'event_category': 'Aesthetics' });
-            alert("Vibe check: IMMACULATE.");
-        }
-
-        function triggerChaos(name) {
-            const sounds = ["BEEP", "BOOP", "ERR_404_BRAIN_NOT_FOUND"];
-            alert(sounds[Math.floor(Math.random() * sounds.length)]);
-            document.body.style.filter = "invert(100%)";
-            gtag('event', 'conversion', { 'send_to': 'AW-REPLACE_ME' });
-        }
-
-        function runAway() {
-            const btn = document.getElementById('runner');
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-            gtag('event', 'chase_begun', { 'event_label': 'Runner Button' });
+        function logAction(type) {
+            gtag('event', type, {
+                'event_category': 'behavioral_testing',
+                'event_label': 'Google_Aesthetic_V1'
+            });
+            
+            if (type.includes('Dont')) {
+                alert("Choice: Chaotic. This event has been sent to your Google Ads conversion stream.");
+            } else {
+                alert("Choice: Standard. This event has been logged in Google Analytics.");
+            }
         }
     </script>
 </body>
